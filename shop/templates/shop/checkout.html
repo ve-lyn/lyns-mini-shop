@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout - Lyn's Mini Shop</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+            color: #222;
+        }
+
+        /* NAVIGATION */
+        .navbar {
+            background-color: white;
+            border-bottom: 1px solid #eeeeee;
+            padding: 15px 0;
+        }
+
+        .brand {
+            text-decoration: none;
+            color: #222;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .brand span {
+            color: #6C4AB6;
+        }
+
+        .cart-button {
+            background-color: #F3EEFF;
+            color: #6C4AB6;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+
+        .cart-button:hover {
+            background-color: #E8DFFF;
+            color: #563596;
+        }
+
+        /* PAGE */
+        .checkout-container {
+            max-width: 1000px;
+            margin: 45px auto;
+        }
+
+        .page-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #777;
+            margin-bottom: 35px;
+        }
+
+        /* CARDS */
+        .checkout-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* ORDER ITEMS */
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eeeeee;
+            padding: 14px 0;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: bold;
+        }
+
+        .item-quantity {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .item-price {
+            color: #6C4AB6;
+            font-weight: bold;
+        }
+
+        .total-box {
+            background-color: #F3EEFF;
+            border-radius: 15px;
+            padding: 18px;
+            margin-top: 20px;
+        }
+
+        .total-label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .total-price {
+            color: #6C4AB6;
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        /* FORM */
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #6C4AB6;
+            box-shadow: 0 0 0 0.15rem rgba(108, 74, 182, 0.15);
+        }
+
+        /* PAYMENT DETAILS */
+        .payment-details {
+            display: none;
+            background-color: #F3EEFF;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-details h5 {
+            color: #6C4AB6;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .payment-info {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .payment-note {
+            font-size: 14px;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        /* PLACE ORDER */
+        .place-order {
+            width: 100%;
+            background-color: #6C4AB6;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .place-order:hover {
+            background-color: #563596;
+            color: white;
+        }
+
+        .secure-text {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 60px;
+            background-color: #222;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .checkout-card {
+                padding: 20px;
+            }
+
+            .checkout-container {
+                margin: 30px 15px;
+            }
+
+            .order-item {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <a href="{% url 'product_list' %}" class="brand">
+                    <span>Lyn's</span> Mini Shop 🛍️
+                </a>
+
+                <a href="{% url 'cart_list' %}" class="btn cart-button">
+                    🛒 Back to Cart
+                </a>
+
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- CHECKOUT -->
+    <main class="checkout-container">
+
+        <div class="text-center">
+
+            <h1 class="page-title">
+                🧾 Checkout
+            </h1>
+
+            <p class="page-subtitle">
+                Complete your details to place your order.
+            </p>
+
+        </div>
+
+
+        <!-- ORDER SUMMARY -->
+        <div class="checkout-card">
+
+            <h2 class="card-title">
+                🛍️ Order Summary
+            </h2>
+
+            {% for item in cart.items.all %}
+
+                <div class="order-item">
+
+                    <div>
+
+                        <div class="item-name">
+                            {{ item.product.name }}
+                        </div>
+
+                        <div class="item-quantity">
+                            Quantity: {{ item.quantity }}
+                        </div>
+
+                    </div>
+
+                    <div class="item-price">
+                        GH₵ {{ item.subtotal }}
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <p class="text-muted">
+                    Your cart is empty.
+                </p>
+
+            {% endfor %}
+
+
+            <div class="total-box">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <span class="total-label">
+                        Total Amount
+                    </span>
+
+                    <span class="total-price">
+                        GH₵ {{ cart.total_price }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DELIVERY INFORMATION -->
+        <div class="checkout-card">
+
+            <h2 class="card-title">
+                📦 Delivery Information
+            </h2>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- FULL NAME -->
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="full_name"
+                        class="form-control"
+                        placeholder="Enter your full name"
+                        required>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Delivery Address
+                    </label>
+
+                    <textarea
+                        name="address"
+                        class="form-control"
+                        rows="4"
+                        placeholder="Enter your delivery address"
+                        required></textarea>
+
+                </div>
+
+
+                <!-- PAYMENT -->
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Payment Method
+                    </label>
+
+                    <select
+                        name="payment_method"
+                        id="payment_method"
+                        class="form-select"
+                        required>
+
+                        <option value="">
+                            Select Payment Method
+                        </option>
+
+                        <option value="Mobile Money">
+                            📱 Mobile Money (MoMo)
+                        </option>
+
+                        <option value="Card">
+                            💳 Debit/Credit Card
+                        </option>
+
+                        <option value="Cash on Delivery">
+                            💵 Cash on Delivery
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- MOBILE MONEY DETAILS -->
+                <div id="momo-details" class="payment-details">
+
+                    <h5>
+                        📱 Mobile Money Payment
+                    </h5>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            MoMo Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="momo_name"
+                            id="momo_name"
+                            class="form-control"
+                            placeholder="Enter the name on the MoMo account">
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            MoMo Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            name="momo_number"
+                            id="momo_number"
+                            class="form-control"
+                            placeholder="e.g. 024 123 4567">
+
+                    </div>
+
+                    <div class="payment-info">
+                        <strong>Payment Amount:</strong>
+                        GH₵ {{ cart.total_price }}
+                    </div>
+
+                    <p class="payment-note">
+                        🔒 After you continue, you will be prompted to authorize
+                        the Mobile Money payment securely.
+                    </p>
+
+                </div>
+
+
+                <!-- CARD DETAILS -->
+                <div id="card-details" class="payment-details">
+
+                    <h5>
+                        💳 Card Payment
+                    </h5>
+
+                    <div class="payment-info">
+
+                        <strong>Payment Amount:</strong>
+                        GH₵ {{ cart.total_price }}
+
+                    </div>
+
+                    <p class="payment-note">
+                        🔒 You will be taken to a secure payment page to enter
+                        your card details. Your card information will not be
+                        stored by Lyn's Mini Shop.
+                    </p>
+
+                </div>
+
+
+                <!-- CASH ON DELIVERY -->
+                <div id="cash-details" class="payment-details">
+
+                    <h5>
+                        💵 Cash on Delivery
+                    </h5>
+
+                    <div class="payment-info">
+
+                        You will pay when your order is delivered.
+
+                        <br><br>
+
+                        <strong>
+                            Order Total: GH₵ {{ cart.total_price }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PLACE ORDER -->
+                <button
+                    type="submit"
+                    class="place-order">
+
+                    ✅ Place Order
+
+                </button>
+
+                <p class="secure-text">
+                    🔒 Your order information is kept secure.
+                </p>
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <h5>
+            Lyn's Mini Shop 🛍️
+        </h5>
+
+        <p class="mb-0">
+            Quality products. Affordable prices. Happy shopping. ❤️
+        </p>
+
+        <small>
+            © 2026 Lyn's Mini Shop
+        </small>
+
+    </footer>
+
+
+    <!-- PAYMENT METHOD SCRIPT -->
+    <script>
+
+        const paymentMethod = document.getElementById("payment_method");
+
+        const momoDetails = document.getElementById("momo-details");
+        const cardDetails = document.getElementById("card-details");
+        const cashDetails = document.getElementById("cash-details");
+
+        const momoName = document.getElementById("momo_name");
+        const momoNumber = document.getElementById("momo_number");
+
+
+        paymentMethod.addEventListener("change", function () {
+
+            // Hide everything first
+            momoDetails.style.display = "none";
+            cardDetails.style.display = "none";
+            cashDetails.style.display = "none";
+
+            // Remove required from MoMo fields
+            momoName.required = false;
+            momoNumber.required = false;
+
+
+            // MOBILE MONEY
+            if (this.value === "Mobile Money") {
+
+                momoDetails.style.display = "block";
+
+                momoName.required = true;
+                momoNumber.required = true;
+
+            }
+
+
+            // CARD
+            else if (this.value === "Card") {
+
+                cardDetails.style.display = "block";
+
+            }
+
+
+            // CASH ON DELIVERY
+            else if (this.value === "Cash on Delivery") {
+
+                cashDetails.style.display = "block";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>

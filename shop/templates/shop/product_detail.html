@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ product.name }} - Lyn's Mini Shop</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+            color: #222;
+        }
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #eeeeee;
+            padding: 15px 0;
+        }
+
+        .brand {
+            text-decoration: none;
+            color: #222;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .brand span {
+            color: #6C4AB6;
+        }
+
+        .cart-button {
+            background-color: #F3EEFF;
+            color: #6C4AB6;
+            border: none;
+            border-radius: 25px;
+            padding: 11px 20px;
+            font-weight: bold;
+        }
+
+        .product-details {
+            background: white;
+            border-radius: 25px;
+            margin-top: 50px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .product-name {
+            font-size: 34px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            color: #666;
+            font-size: 17px;
+            line-height: 1.7;
+            margin: 20px 0;
+        }
+
+        .rating {
+            margin-bottom: 15px;
+        }
+
+        .price {
+            color: #6C4AB6;
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .add-cart {
+            display: inline-block;
+            background-color: #6C4AB6;
+            color: white;
+            padding: 13px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .add-cart:hover {
+            background-color: #563596;
+            color: white;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            color: #6C4AB6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 60px;
+            background-color: #222;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .product-details {
+                padding: 20px;
+            }
+
+            .product-image {
+                height: 300px;
+                margin-bottom: 25px;
+            }
+
+            .product-name {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <a href="{% url 'product_list' %}" class="brand">
+                    <span>Lyn's</span> Mini Shop 🛍️
+                </a>
+
+                <a href="{% url 'cart_list' %}" class="btn cart-button">
+                    🛒 My Cart
+                </a>
+
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- PRODUCT DETAILS -->
+    <main class="container">
+
+        <div class="product-details">
+
+            <div class="row align-items-center">
+
+                <!-- PRODUCT IMAGE -->
+                <div class="col-md-6">
+
+                    {% if product.image %}
+
+                        <img src="{{ product.image.url }}"
+                             alt="{{ product.name }}"
+                             class="product-image">
+
+                    {% else %}
+
+                        <div class="product-image d-flex align-items-center justify-content-center">
+                            <span class="text-muted">No Image</span>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- PRODUCT INFORMATION -->
+                <div class="col-md-6">
+
+                    <h1 class="product-name">
+                        {{ product.name }}
+                    </h1>
+
+                    <div class="rating">
+                        ⭐⭐⭐⭐⭐
+                    </div>
+
+                    <p class="description">
+                        {{ product.description }}
+                    </p>
+
+                    <div class="price">
+                        GH₵ {{ product.price }}
+                    </div>
+
+                    <a href="{% url 'add_to_cart' product.id %}"
+                       class="add-cart">
+                        🛒 Add to Cart
+                    </a>
+
+                    <br>
+
+                    <a href="{% url 'product_list' %}"
+                       class="back-button">
+                        ← Back to Shop
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <h5>Lyn's Mini Shop 🛍️</h5>
+
+        <p class="mb-0">
+            Quality products. Affordable prices. Happy shopping. ❤️
+        </p>
+
+        <small>
+            © 2026 Lyn's Mini Shop
+        </small>
+
+    </footer>
+
+</body>
+</html>

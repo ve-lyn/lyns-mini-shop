@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Successful - Lyn's Mini Shop</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+        }
+
+        .success-box {
+            background: white;
+            max-width: 650px;
+            margin: 60px auto;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        .success-icon {
+            font-size: 65px;
+            text-align: center;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: bold;
+            color: #6C4AB6;
+            margin-top: 15px;
+        }
+
+        .message {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .order-info {
+            background-color: #f8f5ff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #e5e0f0;
+            padding: 12px 0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .value {
+            color: #222;
+            text-align: right;
+        }
+
+        .total {
+            font-size: 22px;
+            font-weight: bold;
+            color: #6C4AB6;
+        }
+
+        .shop-button {
+            display: block;
+            width: 100%;
+            background-color: #6C4AB6;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .shop-button:hover {
+            background-color: #563596;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="success-box">
+
+            <div class="success-icon">
+                🎉
+            </div>
+
+            <h1 class="title">
+                Order Successful!
+            </h1>
+
+            <p class="message">
+                Thank you for shopping with Lyn's Mini Shop. ❤️
+                Your order has been received successfully.
+            </p>
+
+            <div class="order-info">
+
+                <div class="info-row">
+                    <span class="label">👤 Customer Name</span>
+                    <span class="value">{{ full_name }}</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="label">📍 Delivery Address</span>
+                    <span class="value">{{ address }}</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="label">💳 Payment Method</span>
+                    <span class="value">{{ payment_method }}</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="label">💰 Order Total</span>
+                    <span class="value total">
+                        GH₵ {{ total }}
+                    </span>
+                </div>
+
+            </div>
+
+            <a href="{% url 'product_list' %}" class="shop-button">
+                🛍️ Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
